@@ -1,0 +1,30 @@
+namespace: mydp
+mydp:
+  defines: runnable
+  metadata:
+    name: mydp
+    description: >-
+      A FastAPI application designed to retrieve and handle data from various
+      cryptocurrency exchanges.
+    icon: https://emojiapi.dev/api/v1/robot.svg
+  containers:
+    mydp:
+      build: .
+  services:
+    main-port:
+      container: mydp
+      port: <- $port
+      host-port: <- $port
+      publish: false
+      protocol: TCP
+      description: Main port the app is communicating through.
+  connections:
+    config:
+      target: json-config/base
+      service: service
+  variables:
+    port:
+      env: PORT
+      type: int
+      description: Main port the application communicates through.
+      value: 8000
